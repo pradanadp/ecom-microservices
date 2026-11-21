@@ -13,3 +13,7 @@ spring:
 
 server:
   port: 8083
+
+cart:
+  service:
+    url: http://localhost:8084

@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: cart-service
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:cart
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+
+server:
+  port: 8084
+
+product:
+  service:
+    url: http://localhost:8081

@@ -34,6 +34,10 @@ public class ProductService {
                 .toList();
     }
 
+    public ProductResponse getProduct(Long id) {
+        return mapToProductResponse(findProduct(id));
+    }
+
     public void deleteProduct(Long id) {
         Product product = findProduct(id);
         product.setIsActive(false);
