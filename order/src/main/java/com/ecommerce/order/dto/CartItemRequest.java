@@ -1,4 +1,4 @@
-package com.ecommerce.cart.dto;
+package com.ecommerce.order.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

@@ -1,10 +1,9 @@
 package com.ecommerce.order.service;
 
-import com.ecommerce.order.client.CartClient;
-import com.ecommerce.order.dto.CartItemDTO;
 import com.ecommerce.order.dto.OrderItemDTO;
 import com.ecommerce.order.dto.OrderResponse;
 import com.ecommerce.order.exception.EmptyCartException;
+import com.ecommerce.order.model.CartItem;
 import com.ecommerce.order.model.Order;
 import com.ecommerce.order.model.OrderItem;
 import com.ecommerce.order.model.OrderStatus;
@@ -20,27 +19,27 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderService {
 
-    private final CartClient cartClient;
+    private final CartService cartService;
     private final OrderRepository orderRepository;
 
     @Transactional
     public OrderResponse createOrder(Long userId) {
-        List<CartItemDTO> cartItems = cartClient.fetchCartItems(userId);
+        List<CartItem> cartItems = cartService.getCartItems(userId);
         validateCartNotEmpty(cartItems);
 
         Order savedOrder = orderRepository.save(buildOrder(userId, cartItems));
-        cartClient.clearCart(userId);
+        cartService.clearCart(userId);
 
         return mapToOrderResponse(savedOrder);
     }
 
-    private void validateCartNotEmpty(List<CartItemDTO> cartItems) {
+    private void validateCartNotEmpty(List<CartItem> cartItems) {
         if (cartItems.isEmpty()) {
             throw new EmptyCartException("Cannot create order: cart is empty");
         }
     }
 
-    private Order buildOrder(Long userId, List<CartItemDTO> cartItems) {
+    private Order buildOrder(Long userId, List<CartItem> cartItems) {
         Order order = Order.builder()
                 .userId(userId)
                 .status(OrderStatus.CONFIRMED)
@@ -50,17 +49,17 @@ public class OrderService {
         return order;
     }
 
-    private BigDecimal calculateTotal(List<CartItemDTO> cartItems) {
+    private BigDecimal calculateTotal(List<CartItem> cartItems) {
         return cartItems.stream()
                 .map(this::lineTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    private BigDecimal lineTotal(CartItemDTO item) {
+    private BigDecimal lineTotal(CartItem item) {
         return item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity()));
     }
 
-    private List<OrderItem> toOrderItems(List<CartItemDTO> cartItems, Order order) {
+    private List<OrderItem> toOrderItems(List<CartItem> cartItems, Order order) {
         return cartItems.stream()
                 .map(item -> OrderItem.builder()
                         .productId(item.getProductId())

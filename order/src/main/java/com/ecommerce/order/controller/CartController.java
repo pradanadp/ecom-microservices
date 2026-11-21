@@ -1,8 +1,8 @@
-package com.ecommerce.cart.controller;
+package com.ecommerce.order.controller;
 
-import com.ecommerce.cart.dto.CartItemRequest;
-import com.ecommerce.cart.dto.CartItemResponse;
-import com.ecommerce.cart.service.CartService;
+import com.ecommerce.order.dto.CartItemRequest;
+import com.ecommerce.order.dto.CartItemResponse;
+import com.ecommerce.order.service.CartService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

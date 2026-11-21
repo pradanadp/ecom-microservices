@@ -1,8 +1,8 @@
-package com.ecommerce.cart.client;
+package com.ecommerce.order.client;
 
-import com.ecommerce.cart.dto.ProductDTO;
-import com.ecommerce.cart.exception.ProductServiceUnavailableException;
-import com.ecommerce.cart.exception.ResourceNotFoundException;
+import com.ecommerce.order.dto.ProductDTO;
+import com.ecommerce.order.exception.ProductServiceUnavailableException;
+import com.ecommerce.order.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;

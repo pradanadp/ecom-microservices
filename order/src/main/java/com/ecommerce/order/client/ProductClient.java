@@ -1,6 +1,6 @@
-package com.ecommerce.cart.client;
+package com.ecommerce.order.client;
 
-import com.ecommerce.cart.dto.ProductDTO;
+import com.ecommerce.order.dto.ProductDTO;
 
 public interface ProductClient {
     ProductDTO fetchProduct(Long productId);

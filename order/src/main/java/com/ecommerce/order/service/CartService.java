@@ -1,13 +1,13 @@
-package com.ecommerce.cart.service;
+package com.ecommerce.order.service;
 
-import com.ecommerce.cart.client.ProductClient;
-import com.ecommerce.cart.dto.CartItemRequest;
-import com.ecommerce.cart.dto.CartItemResponse;
-import com.ecommerce.cart.dto.ProductDTO;
-import com.ecommerce.cart.exception.InsufficientStockException;
-import com.ecommerce.cart.exception.ResourceNotFoundException;
-import com.ecommerce.cart.model.CartItem;
-import com.ecommerce.cart.repository.CartItemRepository;
+import com.ecommerce.order.client.ProductClient;
+import com.ecommerce.order.dto.CartItemRequest;
+import com.ecommerce.order.dto.CartItemResponse;
+import com.ecommerce.order.dto.ProductDTO;
+import com.ecommerce.order.exception.InsufficientStockException;
+import com.ecommerce.order.exception.ResourceNotFoundException;
+import com.ecommerce.order.model.CartItem;
+import com.ecommerce.order.repository.CartItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,6 +66,11 @@ public class CartService {
         return cartItemRepository.findByUserId(userId).stream()
                 .map(this::mapToCartItemResponse)
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<CartItem> getCartItems(Long userId) {
+        return cartItemRepository.findByUserId(userId);
     }
 
     public void clearCart(Long userId) {
